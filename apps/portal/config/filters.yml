@@ -1,0 +1,11 @@
+rendering: ~
+security:
+  class: sfGuardBasicSecurityFilter
+
+# insert Kodazi filters
+viewReq:                 
+  class: viewFilter
+
+cache:     ~
+common:    ~
+execution: ~

@@ -1,0 +1,6 @@
+all:
+  stylesheets:    []
+  javascripts:    [/uploadify/swfobject.js, /uploadify/jquery.uploadify.v2.1.0.min.js]
+  
+  has_layout:     on
+  layout:         layout_projects

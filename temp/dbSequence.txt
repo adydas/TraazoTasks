@@ -1,0 +1,22 @@
+id
+type
+parent_id
+
+
+ID		TYPE	PARENT
+1		task	11818
+2		group	2
+3 		task	19182
+4		task	17182
+5		group	1
+6		task	23891
+7		group	88
+8		task	1232
+9		group	101
+10		group	10
+
+reorder 5,[g7,t1232,g101,g10]
+mvTaskToGrp
+mvTaskOrphan
+
+	

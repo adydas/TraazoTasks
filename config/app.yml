@@ -1,0 +1,45 @@
+all:
+  alfresco:
+    url:    
+    versionurl:    
+    username:   
+    password:   
+    location:   
+  authorize-net:
+    transaction-key: 
+    api-login: 
+  task-estimate-type:
+    seconds:  1
+    minutes:  2
+    hours:  3
+    days:  4
+    weeks: 5
+    months: 6
+    years: 7
+  notif-type:
+    comment:  1
+    message:  2
+  notif-status:
+    unread:  0
+    read:  1
+    delete: 2  
+  project-status:
+    disabled: 0
+    active: 1
+  task-status:
+    disabled: 0
+    active: 1
+    completed: 2
+  project-bill-status:
+    free: 0
+    paid: 1
+    unpaid: 2
+  error:
+    permission: "User does not have the right permission"
+  user-type:
+    user: 1
+    admin: 2
+  user-type-domain:
+    account-owner: 1
+    user-admin: 2
+    user-base: 3

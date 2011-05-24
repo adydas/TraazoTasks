@@ -1,0 +1,10 @@
+editSuccess:
+  http_metas:
+    content-type: text/html
+
+  stylesheets:    []
+
+  javascripts:    []
+
+  has_layout:     on
+  layout:         layout_project

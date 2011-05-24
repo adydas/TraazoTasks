@@ -1,0 +1,527 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Tasks 5</title>
+<link rel="stylesheet" type="text/css" media="screen" href="css/tasks5.css" />
+
+<style type="text/css" media="screen">
+.box {
+    height: 520px;
+    position: relative;
+}
+
+#task_container {
+  overflow: auto;
+  position: relative;
+}
+
+.g_header {
+  opacity: 1;
+}
+
+
+/* JS required styles */
+.box .box {
+    border: 0;
+}
+</style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+
+<script type="text/javascript">
+create_group = function() {
+	var mileName = $("#mile_create").val();
+	$("#group_1").prepend('<div id="milestone_27_header" class="milestone_marker">' + mileName + '</div><div></div></div>');
+	return false;
+}
+
+
+$(document).ready(function () {
+    // 1. grab a bunch of variables
+    var $container = $('#task_container');
+    var $headers = $('.g_header');
+    var zIndex = 2;
+    var containerTop = $container.offset().top + parseInt($container.css('marginTop')) + parseInt($container.css('borderTopWidth'));
+    var $fakeHeader = $headers.filter(':first').clone();
+    
+    // 2. absolute position on the milestone markers, and fix the z-index so they increase
+    $headers.each(function () {
+       // set position absolute, etc
+       var $header = $(this), height = $header.outerHeight(), width = $header.outerWidth();
+
+       zIndex += 2;
+       
+       $header.css({
+           position: 'absolute',
+           width: $header.width(),
+           zIndex: zIndex
+       });
+       
+       // create the white space
+       var $spacer = $header.after('<div />').next();
+       $spacer.css({
+           height: height,
+           width: width
+       });
+    });
+    
+    // 3. bind a scroll event and change the text of the take heading
+    $container.scroll(function () {
+        $headers.each(function () {
+            var $header = $(this);
+            var top = $header.offset().top;
+            
+            if (top < containerTop) {
+                $fakeHeader.text($header.text());
+                $fakeHeader.css('zIndex', parseInt($header.css('zIndex'))+100);
+            }
+        });
+    });
+    
+    // 4. initialisation
+    $container.wrap('<div class="box" />');
+    $fakeHeader.css({ zIndex: 8, position: 'absolute',width: $headers.filter(':first').width()});
+    $container.before($fakeHeader.text($headers.filter(':first').text()));
+	
+	
+	$(window).resize(function(){
+		wH = $(window).height();
+		wH = (wH - 190);
+	   $('.box').height(wH);
+
+
+	});
+
+
+
+
+});
+
+</script>
+</head>
+
+<body>
+
+	<div id="mh" class="clearfix">
+        <div id="logo" class="fl">
+        	Novartis Project Space
+        </div>
+        <div class="fr">
+            <div class="fl" style="background: #ECECE6; padding: 2px;">
+                <img src="images/zim.jpg" alt="Profile" width="25" height="25"/>
+            </div>
+            <div class="fl" style="padding: 5px 0 0 15px;">
+                 Hi, <a href="/profile/edit">Tea Bags</a> | <a class="login_logout" href="/logout">Logout</a> </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div id="section-header">
+    <h1>
+    </h1>
+    <ul id="project_tabs" class="nav_secondary container">
+        <li id="project_tab_1"><a href=""><span>Novartis Sharepoint Integration</span></a></li>
+        <li id="project_tab_2"><a href=""><span>2010 Roadmap Tasks</span></a></li>
+        <li id="project_tab_add"><a href="">+ Open New</a></li>
+  	</ul>
+    </div>
+	<div id="task_wrapper" class="container">
+    
+    	<div id="list_wrapper" class="content fl">
+        	<div id="g_create_wrap" class="clearfix">
+            	<label for="txt_g_create">
+                    Create Group 
+                </label>
+                <div class="fl">
+                	<form action="#" onsubmit="create_group(); return false;">
+                        <input id="mile_create" type="text" style="width: 400px;" />
+                        <input type="submit" value="Add" />
+                    </form>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="task_controls">
+            	
+            
+            	<div class="clear"></div>
+            </div>
+            <div id="task_container" class="box">
+                <div id="g_1" class="g">
+                    <div id="g_head_1" class="g_header">
+                        <div id="g_name_1" class="g_name fl">
+                            Incoming Tasks to be Completed by End of Term
+                        </div>
+                        <div id="g_name_actions_1" class="g_name_actions fr">
+                        	<ul>
+                            	<li><a href="#">Edit</a></li>
+                                <li class="last"><a href="#" alt="Delete Group" class="action_delete_group"> </a></li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+               
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">12</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_2" class="t_row clearfix">
+                        <div id="t_status_2" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_2" class="t_id fl">13</div>
+                        <div id="t_description_2" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_2" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_2" class="t_due fr">3 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">14</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">15</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">16</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    <div id="g_add_new_link_1" class="add_new_link">
+                    	<a href="#" onclick="$('#g_add_new_link_1, #g_add_new_form_1').toggle(); return false;">Add New</a>
+                    </div>
+                    <div id="g_add_new_form_1" class="add_new_form clearfix" style="display: none;">
+                    	<form>
+                    	<p>Enter task<br/>
+  							<textarea rows="2" name="todo_item[content]" id="new_content_7992387" cols="65" class="new_item_field submits_on_return"></textarea>
+                        </p>
+                        <ul>
+                          <li>
+                            <p>Who's responsible?<br/>
+                              <select name="task[responsible_party]" id="task">
+                                <option value="">Anyone</option>
+                                <option>Me (Steve Zimmerman)</option><option value="">----------</option>
+                                <option>BERKLEE MEDIA</option>
+                                <option>Caitlin Bailey</option>
+                                <option>John Mileham</option>
+                                <option>Kristjan Varnik</option>
+                                <option>Ticket Admin</option>
+                                <option>barry kelly</option>
+                                <option>dave kusek</option>
+                                <option>robert heath</option>
+                                <option value="">----------</option>
+                                <option>LAB</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                            <p>When is it due?<br/>
+                              <input type="text" readonly="readonly" placeholder="No due date" name="_todo_item_preview_due_at" id="" class="due_date menu_target new_date placeholder"/>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Priority?<br/>
+                            <select id="group_new_priority_1">
+                                <option value="">None</option>
+                                <option value="">Low</option>
+                                <option value="">Medium</option>
+                                <option value="">High</option>
+                                <option value="">Urgent</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Status?<br/>
+                            <select id="group_new_priority_1">
+                                <option value="">Open</option>
+                                <option value="">In Progress</option>
+                                <option value="">Fixed</option>
+                                <option value="">Verified</option>
+                                <option value="">Closed</option>
+                                <option value="">Invalid</option>
+                              </select>
+                            </p>
+                          </li>
+                        </ul>
+                        <div class="clear"></div>
+                        <p style="clear: both;">Type or choose a tag(s)<br/>
+                            <input type="text" style="width: 523px;">
+                        </p>
+                        <div class="form_actions">
+                        	<input type="submit" value="Create" /> <a href="#" onclick="$('#g_add_new_link_1, #g_add_new_form_1').toggle(); return false;">Close</a>
+                        </div>
+                    	</form>
+                        <div class="clear"></div>
+                    </div>
+                 </div>
+                 
+                 <div id="g_2" class="g">
+                    <div id="g_head_2" class="g_header">
+                        <div id="g_name_2" class="fl">
+                            Not a Priority, but Must be Fixed by End of Term
+                        </div>
+                        <div id="g_name_actions_2" class="g_name_actions fr">
+                        	<ul>
+                            	<li><a href="#">Edit</a></li>
+                                <li class="last"><a href="#" alt="Delete Group" class="action_delete_group"> </a></li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+               
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">17</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_2" class="t_row clearfix">
+                        <div id="t_status_2" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_2" class="t_id fl">18</div>
+                        <div id="t_description_2" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_2" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_2" class="t_due fr">3 days</div>
+                        <div id="clear"></div>
+                    </div>
+                	<div id="g_add_new_link_2" class="add_new_link">
+                    	<a href="#" onclick="$('#g_add_new_link_2, #g_add_new_form_2').toggle(); return false;">Add New</a>
+                    </div>
+                    <div id="g_add_new_form_2" class="add_new_form clearfix" style="display: none;">
+                    	<form>
+                    	<p>Enter task<br/>
+  							<textarea rows="2" name="todo_item[content]" id="new_content_7992387" cols="65" class="new_item_field submits_on_return"></textarea>
+                        </p>
+                        <ul>
+                          <li>
+                            <p>Who's responsible?<br/>
+                              <select name="task[responsible_party]" id="task">
+                                <option value="">Anyone</option>
+                                <option>Me (Steve Zimmerman)</option><option value="">----------</option>
+                                <option>BERKLEE MEDIA</option>
+                                <option>Caitlin Bailey</option>
+                                <option>John Mileham</option>
+                                <option>Kristjan Varnik</option>
+                                <option>Ticket Admin</option>
+                                <option>barry kelly</option>
+                                <option>dave kusek</option>
+                                <option>robert heath</option>
+                                <option value="">----------</option>
+                                <option>LAB</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                            <p>When is it due?<br/>
+                              <input type="text" readonly="readonly" placeholder="No due date" name="_todo_item_preview_due_at" id="" class="due_date menu_target new_date placeholder"/>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Priority?<br/>
+                            <select id="group_new_priority_2">
+                                <option value="">None</option>
+                                <option value="">Low</option>
+                                <option value="">Medium</option>
+                                <option value="">High</option>
+                                <option value="">Urgent</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Status?<br/>
+                            <select id="create_new_status_group_2">
+                                <option value="">Open</option>
+                                <option value="">In Progress</option>
+                                <option value="">Fixed</option>
+                                <option value="">Verified</option>
+                                <option value="">Closed</option>
+                                <option value="">Invalid</option>
+                              </select>
+                            </p>
+                          </li>
+                        </ul>
+                        <div class="clear"></div>
+                        <p style="clear: both;">Type or choose a tag(s)<br/>
+                            <input type="text" style="width: 523px;">
+                        </p>
+                        <div class="form_actions">
+                        	<input type="submit" value="Create" /> <a href="#" onclick="$('#g_add_new_link_2, #g_add_new_form_2').toggle(); return false;">Close</a>
+                        </div>
+                    	</form>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                
+                
+                <div id="g_3" class="g">
+                    <div id="g_head_3" class="g_header">
+                        <div id="g_name_3" class="fl">
+                            Unassigned
+                        </div>
+                        <div id="g_name_actions_1" class="g_name_actions fr">
+                        	<ul>
+                            	<li><a href="#">Edit</a></li>
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+               
+                    <div id="task_1" class="t_row clearfix">
+                        <div id="t_status_1" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_1" class="t_id fl">1</div>
+                        <div id="t_description_1" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_1" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_1" class="t_due fr">2 days</div>
+                        <div id="clear"></div>
+                    </div>
+                    
+                    <div id="task_2" class="t_row clearfix">
+                        <div id="t_status_2" class="t_status fl"><input type="checkbox" /></div>
+                        <div id="t_id_2" class="t_id fl">22</div>
+                        <div id="t_description_2" class="t_description fl">Border on assignments is missing on one page, but then not missing on the other</div>
+                        <div id="t_owner_2" class="t_owner fl">Ady Das</div>
+                        <div id="t_due_2" class="t_due fr">3 days</div>
+                        <div id="clear"></div>
+                    </div>
+                	<div id="g_add_new_link_3" class="add_new_link">
+                    	<a href="#" onclick="$('#g_add_new_link_3, #g_add_new_form_3').toggle(); return false;">Add New</a>
+                    </div>
+                    <div id="g_add_new_form_3" class="add_new_form clearfix" style="display: none;">
+                    	<form>
+                    	<p>Enter task<br/>
+  							<textarea rows="2" name="todo_item[content]" id="new_content_7992387" cols="65" class="new_item_field submits_on_return"></textarea>
+                        </p>
+                        <ul>
+                          <li>
+                            <p>Who's responsible?<br/>
+                              <select id="create_new_owner_group_3">
+                                <option value="">Anyone</option>
+                                <option>Me (Steve Zimmerman)</option><option value="">----------</option>
+                                <option>BERKLEE MEDIA</option>
+                                <option>Caitlin Bailey</option>
+                                <option>John Mileham</option>
+                                <option>Kristjan Varnik</option>
+                                <option>Ticket Admin</option>
+                                <option>barry kelly</option>
+                                <option>dave kusek</option>
+                                <option>robert heath</option>
+                                <option value="">----------</option>
+                                <option>LAB</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                            <p>When is it due?<br/>
+                              <input type="text" readonly="readonly" placeholder="No due date" name="_todo_item_preview_due_at" id="" class="due_date menu_target new_date placeholder"/>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Priority?<br/>
+                            <select id="create_new_priority_group_3">
+                                <option value="">None</option>
+                                <option value="">Low</option>
+                                <option value="">Medium</option>
+                                <option value="">High</option>
+                                <option value="">Urgent</option>
+                              </select>
+                            </p>
+                          </li>
+                          <li>
+                          	<p>Status?<br/>
+                            <select id="create_new_status_group_3">
+                                <option value="">Open</option>
+                                <option value="">In Progress</option>
+                                <option value="">Fixed</option>
+                                <option value="">Verified</option>
+                                <option value="">Closed</option>
+                                <option value="">Invalid</option>
+                              </select>
+                            </p>
+                          </li>
+                        </ul>
+                        <div class="clear"></div>
+                        <p style="clear: both;">Type or choose a tag(s)<br/>
+                            <input type="text" style="width: 523px;">
+                        </p>
+                        <div class="form_actions">
+                        	<input type="submit" value="Create" /> <a href="#" onclick="$('#g_add_new_link_3, #g_add_new_form_3').toggle(); return false;">Close</a>
+                        </div>
+                    	</form>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="info_wrapper" class="content fl">
+        	<div class="clearfix">
+                <div class="t_id fl">
+                    12
+                </div>
+                <div class="i_description">
+                    <div class="i_started">Task started today, at 3:15, by <a href="#">Calvin Koo</a></div>
+                    <div class="clear"></div>
+                </div>
+                <div id="task_84_comment1" class="task_comment clearfix">
+                    <div class="task_avatar fl">
+                        <img src="images/avatar_comment1.gif" />
+                    </div>
+                    <div class="task_comment_content fl">
+                    	
+                        <a href="#">John Mileham</a> This was fine in the Fall LMS, so it's strange
+                        that it isn't present in the new terms...?
+                        <br/><br/>
+                        Steve please check this out...
+                        <div class="comment_timestamp">
+                        	3 hours ago
+                        </div>
+                    </div>
+                </div>
+                <div id="task_84_comment1" class="task_comment clearfix">
+                    <div class="task_avatar fl">
+                        <img src="images/avatar_comment2.gif" />
+                    </div>
+                    <div class="task_comment_content fl">
+                        <a href="#">Mike Breen</a> That was before the developer we fired
+                        last week got his hands on it. I'm afraid we'll have to keep it the way
+                        it is until next term... it's too risky to change it now...
+                        
+                      	<div class="comment_timestamp">
+                        	Yesterday at 1:00pm
+                        </div>
+                    </div>
+                </div>
+                <div id="task_84_comment1" class="task_comment task_comment_new last clearfix">
+                    <textarea rows="2" cols="37">Add Comment</textarea>
+                </div>
+               
+                <div class="clear"></div>
+            </div>
+            
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</body>
+</html>

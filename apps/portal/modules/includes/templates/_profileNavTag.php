@@ -1,0 +1,2 @@
+<?php echo $sf_user->isAuthenticated()? link_to($sf_user->getProfile()->getFirstName() . ' ' . $sf_user->getProfile()->getLastName(), '@profile_edit') . ' | ' .link_to('Logout', '@sf_guard_signout', array('class'=>'login_logout')):link_to('Login', '@sf_guard_signin')
+				?>

@@ -1,0 +1,8 @@
+.svn
+/web/uploads/*
+/cache/*
+/log/*
+/web/.htaccess
+/web/.htpasswd
+/data/*.index
+/config/*

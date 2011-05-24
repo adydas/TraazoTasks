@@ -1,0 +1,34 @@
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        A Kodazi Product
+    description:  A Kodazi Product
+    keywords:     A Kodazi Product
+    language:     en
+    robots:       index, follow
+
+  stylesheets:    [login_reg.css, template.css, smoothness/jquery-ui-1.8.custom.css, nyroModal.css, jquery.alerts.css]
+
+  javascripts:    [http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js, jquery_events_common.js]
+
+  has_layout:     on
+  layout:         layout
+
+
+signinSuccess:
+  http_metas:
+    content-type: text/html
+
+  stylesheets:    [login_reg.css]
+
+  javascripts:    []
+
+  has_layout:     on
+  layout:         layout
+  
+downloadAssetSuccess:
+  has_layout:     off
+  
+ 

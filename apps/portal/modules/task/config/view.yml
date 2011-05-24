@@ -1,0 +1,10 @@
+all:
+  http_metas:
+    content-type: text/html
+
+  stylesheets:    [login_reg.css]
+
+  javascripts:    []
+
+  has_layout:     on
+  layout:         layout_projects

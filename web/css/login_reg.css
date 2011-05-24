@@ -1,0 +1,109 @@
+/* Login and registration form styles 	*/
+/* Copyright Kodazi 2009  				*/
+
+body {
+	background: #ECECE6;
+}
+
+a,
+a:visited {
+	color: #0066FF;
+	text-decoration: none;
+}
+
+div#login_wrapper {
+	background: #FFF;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 20px auto;
+	-moz-border-radius: 9px;
+	padding: 25px;
+	width: 350px;
+}
+
+
+div#login_wrapper table th {
+	text-align: right;
+}
+
+div#login_wrapper table td {
+	padding: 7px;
+}
+
+div#login_wrapper label {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+div#login_wrapper div.form_actions_wrapper {
+	border: 3px solid #ECECE6;
+	border-width: 1px 0 6px 0;
+	margin: 10px auto;
+	padding: 7px 0 16px 0;
+	text-align: right;
+}
+
+div#login_wrapper ul.error_list li {
+	list-style-type: none;
+}
+
+div#login_wrapper ul.error_list li {
+	font-size: .8em;
+}
+
+div#login_confirm,
+div#login_options,
+div#domain_confirm,
+div#domain_options_wrapper {
+	background: none;
+	border: none;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0 auto;
+	padding: 18px 25px 25px 25px;
+	width: 975px;
+}
+
+div#login_options {
+	width: 975px;
+}
+
+div#login_confirm{
+	margin: 20px auto 0 auto;
+	padding: 25px 25px 10px 25px;
+}	
+
+div#domain_confirm {
+	padding: 27px 25px 25px 0;
+}
+
+
+ul.domain_list li {
+	font-size: 1.0em;
+}
+
+
+div.balloon {
+	background:transparent url(/images/arrow_accent.gif) no-repeat scroll 12px 0;
+	padding: 11px 0 0 0;
+}
+
+
+
+div.fp_options {
+	width: 470px;
+}
+
+div.fd_options {
+	width: 600px;
+}	
+
+a.login_logout {
+	background: url(/images/btn_close.gif) no-repeat right;
+	font-size: .8em;
+	text-decoration: none;
+	margin: 10px 0 0 0;
+	padding: 0 17px 0 0;
+}	
+
+div.alt_option {
+	padding: 0 0 0 20px;
+}
+

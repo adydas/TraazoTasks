@@ -1,0 +1,267 @@
+#issues
+issue_create:
+  url:  /issue/create/:pid
+  param: { module: issues, action: addNewIssue, pid: :pid }
+  requirements: { pid: \d+ }
+  
+issue_view:
+  url:  /issues/:pid
+  param: { module: issues, action: viewIssues, pid: :pid }
+  requirements: { pid: \d+ }
+  
+  
+#files
+file_upload:
+  url:  /files/upload/:pid/:tid
+  param: { module: files, action: upload, pid: :pid, tid: :null}
+  
+file_delete:
+  url:  /files/delete/:uuid
+  param: { module: files, action: deleteFile, uuid: :null}
+  
+file_download:
+  url:  /files/download/:fid
+  param: { module: asset, action: downloadAsset, fid:null}
+  requirements: { fid: \d+ }
+  
+project_files:
+  url:  /files/view/:pid
+  param: { module: files, action: viewFiles, pid:null}
+  requirements: { pid: \d+ }
+
+#messages
+delete_message:
+  url:  /message/delete/:pid/:mgid/:mgsid
+  param: { module: messages, action: delete, pid:null, mgid:null, mgsid:null}
+  requirements: { mgid: \d+ }
+
+add_message:
+  url:  /message/add/:pid/:mgid
+  param: { module: messages, action: newMessage, pid:null, mgid:null}
+  requirements: { pid: \d+ }
+
+#pid from session    
+view_recent_project_messages: 
+  url:  /message/:pid/view/recent
+  param: { module: messages, action: viewRecentProjectMessgs, pid:null}
+
+add_comment:
+  url:  /comment/add/:mode/:id
+  param: { module: comment, action: add, mode:null, id:null}
+  
+profile_edit:
+  url:  /profile/edit
+  param: { module: profile, action: edit}
+
+billing_plan_select:
+  url:  /plans/select/:plid
+  param: { module: billing, action: selectPlan, plid:null}
+  requirements: { plid: \d+ }
+
+billing_plans_view:
+  url:  /plans/view
+  param: { module: billing, action: viewPlans}
+
+remove_user_project:
+  url:  /user/remove/project/:pid/:uid
+  param: { module: user, action: remove, pid:null, uid:null}
+  requirements: { pid: \d+, uid: \d+} 
+  
+link_user_project:
+  url:  /user/link/project/:pid/:uid
+  param: { module: user, action: link, pid:null, uid:null}
+  requirements: { pid: \d+, uid: \d+}   
+  
+add_user_project:
+  url:  /user/add/project/:pid
+  param: { module: user, action: add, pid:null}
+  requirements: { pid: \d+ }
+
+add_user_domain:
+  url:  /user/add/:aid
+  param: { module: user, action: add, aid: :aid}
+  requirements: { aid: \d+ }
+  
+# Tasks
+view_user_upcoming_tasks:
+  url:  /user/upTasks/:uid
+  param: { module: task, action: userUpcomingTasks}
+  
+view_user_project_tasks:
+  url:  /user/pTasks/:pid
+  param: { module: task, action: userProjectTasks}
+  
+view_project_tasks:
+  url:  /project/:pid/allTasks
+  param: { module: task, action: projectAllTasks, pid: :pid}
+  requirements: { pid: \d+ }
+  
+view_all_project_tasks:
+  url:  /project/:pid/allTasksView
+  param: { module: task, action: allTasksView, pid: :pid}
+  requirements: { pid: \d+ }
+  
+view_all_tasks:
+  url:  /project/:pid/showAllTasks
+  param: { module: task, action: allTasks, pid: :pid}
+  requirements: { pid: \d+ }
+  
+view_all_tasks_json:
+  url:  /project/:pid/showAllTasksJson
+  param: { module: task, action: jsonAllTasks, pid: :pid}
+  requirements: { pid: \d+ }
+
+view_project_upcoming_tasks:
+  url:  /project/upTasks/:pid
+  param: { module: task, action: upcomingTasks, pid: :pid}
+  requirements: { pid: \d+ }
+
+
+task_view:
+  url:  /task/:tid/view
+  param: { module: task, action: taskView, tid:null}
+  requirements: { tid: \d+ }
+  
+task_view_history:
+  url:  /task/history/:tid/view
+  param: { module: task, action: taskHistory, tid: :tid}
+  requirements: { tid: \d+ }
+
+
+task_create:
+  url:  /task/:pid/:mid/create
+  param: { module: task, action: taskCreate, mid: :mid , pid: :pid}
+  requirements: { pid: \d+ }
+  
+project_task_create:
+  url:  /project/task/:pid/create
+  param: { module: task, action: projectTaskCreate, mid: :null , pid: :null}
+  requirements: { pid: \d+ }
+  
+task_delete:
+  url:  /task/:tid/delete
+  param: { module: task, action: taskDelete, tid:null}
+  requirements: { tid: \d+ }
+  
+task_all:
+  url:  /task/all
+  param: { module: task, action: taskAll}
+  
+task_status_set:
+  url:  /task/status/change
+  param: { module: task, action: changeTaskStatus}
+  
+task_alter_users_view:
+  url:  /task/users/view
+  param: {module: task, action: changeTaskUserView }
+ 
+task_alter_users_process:
+  url:  /task/users/process/:tid/:uid
+  param: {module: task, action: changeTaskUserView }
+  
+# Milestones
+milestone_view:
+  url:  /milestone/:mid/view
+  param: { module: project, action: milestoneView, mid:null}
+  requirements: { mid: \d+ }
+
+
+milestone_create:
+  url:  /project/:pid/milestone/create
+  param: { module: project, action: milestoneCreate, pid:null}
+  requirements: { pid: \d+ }
+  
+milestone_delete:
+  url:  /milestone/:mid/delete
+  param: { module: project, action: milestoneDelete, mid:null}
+  requirements: { mid: \d+ }
+  
+#  Project
+project_hub:
+  url:  /project/hub/:pid
+  param: { module: project, action: hub, pid:null}
+  requirements: { pid: \d+ }
+  
+project_create:
+  url:  /project/select/:aid
+  param: { module: project, action: create, aid:null}
+  requirements: { aid: \d+ }
+
+project_edit:
+  url:  /project/edit/:pid
+  param: { module: project, action: edit, pid:null}
+  requirements: { pid: \d+ }
+  
+project_delete:
+  url:  /project/delete/:pid
+  param: { module: project, action: delete, pid: :null}
+  requirements: { pid: \d+ }
+  
+hub_route:
+  url:  /hub
+  param: {module: profile, action: hub }
+
+# Account
+account_get_users:
+  url:  /account/users
+  param: {module: account, action: getUsers }
+
+account_user_add:
+  url:  /account/user/add
+  param: {module: account, action: addUsers }
+  
+account_user_remove:
+  url:  /account/user/remove/:uid
+  param: { module: account, action: removeUser, uid: :null }
+  requirements: { aid: \d+ }
+  
+account_hub:
+  url:  /account/hub/:aid
+  param: {module: account, action: hub, aid:null}
+  requirements: { aid: \d+ }
+  
+account_create:
+  url:  /account/create
+  param: {module: account, action: create }
+  
+account_delete:
+  url:  /account/delete/:aid
+  param: { module: account, action: delete, aid: :null}
+  requirements: { aid: \d+ }
+  
+account_change_owner:
+  url:  /account/owner
+  param: {module: account, action: changeOwner }
+
+pay:
+  url:   /bill_pay
+  param: { module: billing, action: recurBill }
+  
+request_password:
+  url:   /new_password
+  param: { module: user, action: requestPassword }
+
+change_password:
+  url:   /change_password
+  param: { module: user, action: changePassword }
+
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+ 
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+
+
+# default rules
+homepage:
+  url:   /
+  param: { module: dashboard, action: index }
+
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

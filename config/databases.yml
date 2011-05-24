@@ -1,0 +1,14 @@
+all:
+  doctrine:
+    class:        sfDoctrineDatabase
+    param:
+      classname: DebugPDO
+#      dsn:        mysql:dbname=nutshellapp;host=localhost
+#      username:   root
+#      password:   
+      dsn:        mysql:dbname=nutshellapp;host=protoglue.com
+      username:   appleton
+      password:   G0ingcl3@r
+      encoding:   utf8
+      persistent: true
+      pooling:    true

@@ -1,0 +1,1209 @@
+Account:
+  tableName: account
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(240)
+      notnull: true
+    domain_id:
+      type: integer(4)
+      notnull: true
+    primary_user:
+      type: integer(4)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    plan_id: integer(4)
+    address_id: integer(4)
+  relations:
+    Plan:
+      local: plan_id
+      foreign: plan_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+    Domain:
+      local: domain_id
+      foreign: id
+      type: one
+    Address:
+      local: address_id
+      foreign: address_id
+      type: one
+AccountGroup:
+  tableName: account_group
+  columns:
+    group_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    account_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(240)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+AccountType:
+  tableName: account_type
+  columns:
+    user_id:
+      type: integer(4)
+      primary: true
+    type_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+AccountUser:
+  tableName: account_user
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    team_id: integer(4)
+  relations:
+    Team:
+      local: team_id
+      foreign: team_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+AccountUserRole:
+  tableName: account_user_role
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    role_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+AuditLog:
+  tableName: audit_log
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    log:
+      type: string(2147483647)
+      notnull: true
+    created_time:
+      type: timestamp(25)
+      notnull: true
+    action_name: string(244)
+Comment:
+  tableName: comment
+  columns:
+    comment_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    account_id:
+      type: integer(4)
+      notnull: true
+    submitted_by:
+      type: integer(4)
+      notnull: true
+    status:
+      type: string(1)
+      fixed: true
+      default: '0'
+      notnull: true
+    comment_text:
+      type: string(2147483647)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    project_id: integer(4)
+    group_id: integer(4)
+    task_id: integer(4)
+    file_id: integer(4)
+  relations:
+    User:
+      local: submitted_by
+      foreign: id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    File:
+      local: file_id
+      foreign:  id
+      type: one
+Domain:
+  tableName: domain
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+    name:
+      type: string(148)
+      notnull: true
+Email:
+  tableName: email
+  columns:
+    email_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    email:
+      type: string(240)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+EventLog:
+  tableName: event_log
+  columns:
+    event_log_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    account_id:
+      type: integer(4)
+      notnull: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    action:
+      type: enum(7)
+      values: [CREATE, READ, UPDATE, DELETE, COMMENT, ASSIGN]
+    created:
+      type: timestamp(25)
+      notnull: true
+    project_id: integer(4)
+    group_id: integer(4)
+    task_id: integer(4)
+    file_id: integer(4)
+    action_detail: string(248)
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+File:
+  tableName: file
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    is_public:
+      type: integer(2)
+      default: '0'
+    account_id: integer(4)
+    project_id: integer(4)
+    created: timestamp(25)
+FileInfo:
+  tableName: file_info
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    version:
+      type: integer(4)
+      default: '0'
+    version_id:
+      type: integer(4)
+      primary: true
+    type:
+      type: integer(4)
+      default: '0'
+      notnull: true
+    creator_id:
+      type: integer(4)
+      notnull: true
+    name: string(512)
+    path: string(1048)
+    description: string(2147483647)
+    size: integer(4)
+  relations:
+    User:
+      local: creator_id
+      foreign: id
+      type: one
+    File:
+      local: file_id
+      foreign: id
+      type: one
+    FileVersion:
+      local: version_id
+      foreign: version_id
+      type: one
+FileIssue:
+  tableName: file_issue
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    issue_id:
+      type: integer(4)
+      primary: true
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+FileTask:
+  tableName: file_task
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    task_id:
+      type: integer(4)
+      primary: true
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+FileUser:
+  tableName: file_user
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    viewer_id:
+      type: integer(4)
+      primary: true
+    view_date: timestamp(25)
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+    User:
+      local: viewer_id
+      foreign: id
+      type: one
+FileVersion:
+  tableName: file_version
+  columns:
+    version_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    file_id:
+      type: integer(4)
+      notnull: true
+    version:
+      type: integer(4)
+      default: '1'
+    created: timestamp(25)
+  relations:
+    File:
+      local: file_id
+      foreign: id
+      type: one
+Group:
+  tableName: groups
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    project_id:
+      type: integer(4)
+      primary: true
+    id:
+      type: integer(4)
+      primary: true
+    parent_id: integer(4)
+    name: string(240)
+    primary_owner: integer(4)
+    sec_owner: integer(4)
+    list_sequence: integer(4)
+    created_by: integer(4)
+    created: timestamp(25)
+  relations:
+    User:
+      local: created_by
+      foreign: id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    PrimaryUser:
+      class: User
+      local: primary_owner
+      foreign: id
+      type: one
+    SecondaryOwner:
+      class: User
+      local: sec_owner
+      foreign: id
+      type: one
+    SubGroups:
+      class: Group
+      local: id
+      foreign: parent_id
+      type: many
+Issue:
+  tableName: issue
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    project_id:
+      type: integer(4)
+      primary: true
+    id:
+      type: integer(4)
+      primary: true
+    reported_by:
+      type: integer(4)
+      notnull: true
+    status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    level2_status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    level3_status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    group_id: integer(4)
+    assigned_to: integer(4)
+    summary: string(2147483647)
+    description: string(2147483647)
+    created: timestamp(25)
+    updated: timestamp(25)
+  relations:
+    User:
+      local: assigned_to
+      foreign: id
+      type: one
+    ReportedBy:
+      class: User
+      local: reported_by
+      foreign: id
+      type: one
+IssueComment:
+  tableName: issue_comment
+  columns:
+    comment_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    issue_id:
+      type: integer(4)
+      primary: true
+    author:
+      type: integer(4)
+      notnull: true
+    body: string(2147483647)
+    created: timestamp(25)
+  relations:
+    User:
+      local: author
+      foreign: id
+      type: one
+IssueMeta:
+  tableName: issue_meta
+  columns:
+    issue_id:
+      type: integer(4)
+      primary: true
+    severity: string(24)
+    frequency: string(8)
+    hardware: string(24)
+    version: string(12)
+IssueTask:
+  tableName: issue_task
+  columns:
+    issue_id:
+      type: integer(4)
+      primary: true
+    task_id:
+      type: integer(4)
+      primary: true
+IssueTracker:
+  tableName: issue_tracker
+  columns:
+    tracker_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    issue_id:
+      type: integer(4)
+      notnull: true
+    track_info: string(2147483647)
+    created: timestamp(25)
+Message:
+  tableName: message
+  columns:
+    messg_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    subject:
+      type: string(2048)
+      default: 'Untitled Message'
+    submitted_by:
+      type: integer(4)
+      notnull: true
+    status:
+      type: string(1)
+      fixed: true
+      default: '1'
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    messg_sub_id: integer(4)
+    account_id: integer(4)
+    project_id: integer(4)
+    body: string(2147483647)
+  relations:
+    Message:
+      local: messg_sub_id
+      foreign: messg_id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    User:
+      local: submitted_by
+      foreign: id
+      type: one
+MessageSubs:
+  tableName: message_subs
+  columns:
+    messg_id:
+      type: integer(4)
+      primary: true
+    subscriber_id:
+      type: integer(4)
+      primary: true
+  relations:
+    User:
+      local: subscriber_id
+      foreign: id
+      type: one
+    Message:
+      local: messg_id
+      foreign: messg_id
+      type: one
+MessageTag:
+  tableName: message_tag
+  columns:
+    messg_tag_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    messg_id:
+      type: integer(4)
+      notnull: true
+    tags:
+      type: string(2048)
+      notnull: true
+  relations:
+    Message:
+      local: messg_id
+      foreign: messg_id
+      type: one
+Notification:
+  tableName: notification
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    invite_id:
+      type: integer(4)
+      notnull: true
+    message:
+      type: string(2147483647)
+      notnull: true
+    type:
+      type: integer(4)
+      notnull: true
+    read_status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+NotificationType:
+  tableName: notification_type
+  columns:
+    type_id:
+      type: integer(4)
+      primary: true
+    notification:
+      type: string(248)
+      notnull: true
+    description: string(2147483647)
+NotifMessage:
+  tableName: notif_message
+  columns:
+    message_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    body:
+      type: string(2147483647)
+      notnull: true
+    created_by:
+      type: integer(4)
+      notnull: true
+    notif_type:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    sub_message_id: integer(4)
+    title: string(2147483647)
+    subject: string(2147483647)
+  relations:
+    User:
+      local: created_by
+      foreign: id
+      type: one
+    NotifMessage:
+      local: sub_message_id
+      foreign: message_id
+      type: one
+NotifUser:
+  tableName: notif_user
+  columns:
+    message_id:
+      type: integer(4)
+      primary: true
+    recipient:
+      type: integer(4)
+      primary: true
+    status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+    updated:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    User:
+      local: recipient
+      foreign: id
+      type: one
+PaymentCard:
+  tableName: payment_card
+  columns:
+    payment_card_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    first_name:
+      type: string(148)
+      notnull: true
+    last_name:
+      type: string(148)
+      notnull: true
+    card_num:
+      type: integer(4)
+      notnull: true
+    card_type:
+      type: string(5)
+      notnull: true
+    expiry_month:
+      type: string(2)
+      notnull: true
+    expiry_year:
+      type: string(4)
+      notnull: true
+    ccv:
+      type: string(8)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    status:
+      type: integer(2)
+      default: '1'
+      notnull: true
+PaymentTransaction:
+  tableName: payment_transaction
+  columns:
+    payment_transaction_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    gateway_transaction_id:
+      type: string(124)
+      notnull: true
+    account_id:
+      type: integer(4)
+      notnull: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    payment_card_id:
+      type: integer(4)
+      notnull: true
+    total_value:
+      type: decimal(6)
+      default: '0.00'
+      scale: false
+    currency:
+      type: string(8)
+      default: USD
+      notnull: true
+    status:
+      type: integer(2)
+      default: '0'
+      notnull: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+    PaymentCard:
+      local: payment_card_id
+      foreign: payment_card_id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+Phone:
+  tableName: phone
+  columns:
+    phone_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    type:
+      type: integer(4)
+      default: '0'
+    created:
+      type: timestamp(25)
+      notnull: true
+    number: string(20)
+  relations:
+    PhoneType:
+      local: type
+      foreign: type_id
+      type: one
+PhoneType:
+  tableName: phone_type
+  columns:
+    type_id:
+      type: integer(4)
+      primary: true
+    name: string(20)
+Plan:
+  tableName: plan
+  columns:
+    plan_id:
+      type: integer(4)
+      primary: true
+    type:
+      type: string(48)
+      notnull: true
+    price:
+      type: decimal(3)
+      scale: false
+    description: string(255)
+PlanFeature:
+  tableName: plan_feature
+  columns:
+    plan_id:
+      type: integer(4)
+      primary: true
+    space:
+      type: integer(4)
+      notnull: true
+    iphone_access:
+      type: string(1)
+      fixed: true
+    ssl_on:
+      type: string(1)
+      fixed: true
+    data_backup:
+      type: string(1)
+      fixed: true
+    num_users: integer(4)
+    num_projects: integer(4)
+  relations:
+    Plan:
+      local: plan_id
+      foreign: plan_id
+      type: one
+Profile:
+  tableName: profile
+  columns:
+    profile_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    sex:
+      type: string(1)
+      fixed: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    first_name: string(255)
+    last_name: string(255)
+    address_id: integer(4)
+  relations:
+    Address:
+      local: address_id
+      foreign: address_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+Project:
+  tableName: project
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    id:
+      type: integer(4)
+      primary: true
+    created_by:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(240)
+      notnull: true
+    status:
+      type: integer(4)
+      default: '0'
+    created:
+      type: timestamp(25)
+      notnull: true
+    address_id: integer(4)
+    description: string(2147483647)
+  relations:
+    Address:
+      local: address_id
+      foreign: address_id
+      type: one
+    User:
+      local: created_by
+      foreign: id
+      type: one
+ProjectEmail:
+  tableName: project_email
+  columns:
+    project_id:
+      type: integer(4)
+      primary: true
+    email_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Email:
+      local: email_id
+      foreign: email_id
+      type: one
+ProjectFile:
+  tableName: project_file
+  columns:
+    file_id:
+      type: integer(4)
+      primary: true
+    project_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    File:
+      local: file_id
+      foreign:  id
+      type: one
+ProjectUser:
+  tableName: project_user
+  columns:
+    project_id:
+      type: integer(4)
+      notnull: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      primary: true
+    team_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Team:
+      local: team_id
+      foreign: team_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+ProjectUserRole:
+  tableName: project_user_role
+  columns:
+    project_id:
+      type: integer(4)
+      primary: true
+    role_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    UserRole:
+      local: role_id
+      foreign: role_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+Session:
+  tableName: session
+  columns:
+    id:
+      type: string(255)
+      primary: true
+    time:
+      type: integer(8)
+      default: '0'
+    data: string(2147483647)
+User:
+  inheritance:
+    extends: SfGuardUser
+    type: simple
+Task:
+  tableName: task
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    project_id:
+      type: integer(4)
+      primary: true
+    id:
+      type: integer(4)
+      primary: true
+    group_id:
+      type: integer(4)
+    created_by:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(240)
+      notnull: true
+    estimate_units:
+      type: decimal(4)
+      scale: false
+    estimate_type:
+      type: integer(4)
+      default: '1'
+    status:
+      type: integer(4)
+      default: '0'
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    owner: integer(4)
+    description: string(2147483647)
+    due_date: timestamp(25)
+    list_sequence: integer(4)
+  relations:
+    User:
+      local: created_by
+      foreign: id
+      type: one
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    Owner:
+      class: User
+      local: owner
+      foreign: id
+      type: one
+Team:
+  tableName: team
+  columns:
+    team_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    project_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(120)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+TeamUser:
+  tableName: team_user
+  columns:
+    team_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    user_role_id: integer(4)
+  relations:
+    Team:
+      local: team_id
+      foreign: team_id
+      type: one
+    UserRole:
+      local: user_role_id
+      foreign: role_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserAccount:
+  tableName: user_account
+  columns:
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    first_name: string(255)
+    last_name: string(255)
+    email: string(255)
+UserAddress:
+  tableName: user_address
+  columns:
+    address_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    type: string(25)
+  relations:
+    Address:
+      local: address_id
+      foreign: address_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserEmail:
+  tableName: user_email
+  columns:
+    email_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    sequence:
+      type: integer(4)
+      default: '1'
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Email:
+      local: email_id
+      foreign: email_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserGroup:
+  tableName: user_group
+  columns:
+    group_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserPhone:
+  tableName: user_phone
+  columns:
+    phone_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    created:
+      type: timestamp(25)
+      notnull: true
+  relations:
+    Phone:
+      local: phone_id
+      foreign: phone_id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserPref:
+  tableName: user_pref
+  columns:
+    account_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+    prefs:
+      type: string(2048)
+      notnull: true
+  relations:
+    Account:
+      local: account_id
+      foreign: id
+      type: one
+    User:
+      local: user_id
+      foreign: id
+      type: one
+UserProfile:
+  tableName: user_profile
+  columns:
+    profile_id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    created:
+      type: timestamp(25)
+      notnull: true
+    street_1: string(255)
+    street_2: string(255)
+    city: string(255)
+    state: string(255)
+    zip: string(48)
+    country: string(48)
+UserRole:
+  tableName: user_role
+  columns:
+    role_id:
+      type: integer(4)
+      primary: true
+    role_name:
+      type: string(240)
+      notnull: true
+    role_category: string(240)
+UserType:
+  tableName: user_type
+  columns:
+    type_id:
+      type: integer(4)
+      primary: true
+    type:
+      type: string(48)
+      notnull: true
+    description: string(255)

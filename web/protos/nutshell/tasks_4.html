@@ -1,0 +1,456 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="title" content="A Kodazi Product" />
+<meta name="Description" content="A Kodazi Product" />
+<meta name="Keywords" content="A Kodazi Product" />
+<meta name="language" content="en" />
+<meta name="robots" content="index, follow" />
+<title>Tasks Sample</title>
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/tasks4.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/nyroModal.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.pageSlide.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/jquery.scrollPane.js"></script>
+<script type="text/javascript" src="js/jquery.nyroModal-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.qtip-1.0.0-rc3.min.js"></script>
+
+
+<style type="text/css" media="screen">
+.box {
+    height: 420px;
+    position: relative;
+}
+
+#task_list_wrapper,
+#task_detail_wrapper {
+  overflow: auto;
+  position: relative;
+}
+
+.milestone_marker {
+  opacity: 1;
+}
+
+
+/* JS required styles */
+.box .box {
+    border: 0;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+	
+	
+
+
+
+set_float_headers();
+set_scroll_panes();
+	
+});
+
+function set_scroll_panes() {
+	$(".task_slide").pageSlide({width:'730', duration:'medium'});
+	
+	$('.scroll-pane').jScrollPane();
+	
+	$('#task_list_wrapper').jScrollPane({scrollbarOnLeft:true}); 
+}
+
+function set_float_headers() {
+    // 1. grab a bunch of variables
+    var $container = $('#task_list_wrapper');
+    var $headers = $('.milestone_marker');
+    var zIndex = 2;
+    var containerTop = $container.offset().top + parseInt($container.css('marginTop')) + parseInt($container.css('borderTopWidth'));
+	
+	
+	
+    var $fakeHeader = $headers.filter(':first').clone();
+    
+    // 2. absolute position on the milestone markers, and fix the z-index so they increase
+    $headers.each(function () {
+       // set position absolute, etc
+       var $header = $(this), height = $header.outerHeight(), width = $header.outerWidth();
+
+       zIndex += 2;
+       
+       $header.css({
+           position: 'absolute',
+           width: $header.width(),
+           zIndex: zIndex
+       });
+       
+       // create the white space
+       var $spacer = $header.after('<div />').next();
+       $spacer.css({
+           height: height,
+           width: width
+       });
+    });
+    
+    // 3. bind a scroll event and change the text of the take heading
+    $container.scroll(function () {
+        $headers.each(function () {
+            var $header = $(this);
+            var top = $header.offset().top;
+            
+            if (top < containerTop) {
+                $fakeHeader.text($header.text());
+                $fakeHeader.css('zIndex', parseInt($header.css('zIndex'))+100);
+            }
+        });
+    });
+	
+	 // 4. initialisation
+    $container.wrap('<div class="box" />');
+    $fakeHeader.css({ zIndex: 8, position: 'absolute',  background: '#FFF url(images/bg_marker.png) no-repeat scroll left center',width: $headers.filter(':first').width()});
+    $container.before($fakeHeader.text($headers.filter(':first').text()));
+}
+
+function highlight_task(task_number) {
+	$('.task_row').removeClass('selected');
+	$('#'+task_number).addClass('selected');
+}
+
+function create_group() {
+	var mileName = $("#mile_create").val();
+	$("#task_list_wrapper").prepend('<div id="milestone_27_header" class="milestone_marker">' + mileName + '</div><div></div>');
+	set_float_headers();
+	return false;
+}
+</script>
+</head>
+<body>
+<div id="mh_bg"> 
+<div id="mh" class="clearfix">
+  <div id="mh_left">
+    <div class="clearfix">
+      <div id="account_name" class="fl"> <a href="/account/hub/22">Ducati Workspace</a></div>
+    </div>
+  </div>
+    <div id="mh_right" class="clearfix">
+    <div class="fl" style="background: #FFF; padding: 2px;">
+        <img src="images/zim.jpg" alt="Profile" width="35" height="35"/>
+    </div>
+    <div class="fl" style="padding: 11px 0 0 15px; font-size: 1.2em;">
+         Hi, <a href="/profile/edit">Tea Bags</a> | <a class="login_logout" href="/logout">Logout</a> </div>
+    </div>
+</div><!-- mh -->
+</div><!-- mh_bg -->
+
+<div id="action_container" class="clearfix">
+  <div class="fl">
+    <h2>Tasks</h2>
+  </div>
+  <div class="fl content_tab_set">
+    <div id="content_tab_wrapper_0" class="content_tab_wrapper clearfix">
+      <ul>
+        <li id="content_tab_all" class="selected"> <a href="/">All</a></li>
+        <li id="content_tab_milestone"> <a href="/project/10/allTasksView">Tasks</a></li>
+        <li id="content_tab_issues"><a href="/project/10/allTasksView">Issues</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fr">
+  	<!-- empty for now -->
+  </div>
+</div><!-- action_container -->
+
+
+<br/>
+<!-- content -->
+<div id="content_wrapper" class="clearfix">
+	<div id="task_wrapper" class="fl block_content">
+    	<div id="create_group" style="margin: 0 0 10px 0; background: #FAFAFA; padding: 7px; -moz-border-radius: 7px;">
+        	<div class="fl" style="margin: 5px 10px 0 0;">Create Group</div>
+            <div class="fl">
+            	<form action="#" onsubmit="create_group(); return false;">
+                    <input id="mile_create" type="text" style="width: 400px;" />
+                    <input type="submit" value="Add" />
+                </form>
+            </div>
+            <div class="clear"></div>    
+        </div>
+        <div id="task_list_wrapper" class="box scroll-pane">
+            <div id="milestone_26_header" class="milestone_marker">Get trailer from David</div>
+            
+            <div id="13" class="task_row clearfix" >
+              <div id="task_status_13" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_13_details" class="task_details fl"> 
+              <a id="task_13_info" class="task_slide" href="task_detail_fragment.html" onclick="highlight_task('13');" tooltip="This task has no description">Bring back protector</a>
+              </div>
+              <div id="task_13_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_13_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_13_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(13)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <!-- task -->
+            <div id="14" class="task_row clearfix">
+              <div id="task_status_14" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_14_details" class="task_details fl"> 
+              <a id="task_14_info" class="task_slide" href="task_detail_fragment2.html" onclick="highlight_task('14');" tooltip="This task has no description">Set Tire Pressure of the front left tire on the Audi A4</a>
+              </div>
+              <div id="task_14_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_14_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_14_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(14)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="15" class="task_row clearfix">
+              <div id="task_status_15" class="task_control fl center">
+                <input onclick="completedToggle(15)" type="checkbox" />
+              </div>
+              <div id="task_15_details" class="task_details fl"> 
+              <a id="task_15_info" class="task_slide" href="task_detail_fragment3.html" onclick="highlight_task('15');" tooltip="This task has no description">Hello holy moly another task is right here</a>
+              </div>
+              <div id="task_15_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_15_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_15_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(15)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/15/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="16" class="task_row clearfix">
+              <div id="task_status_16" class="task_control fl center">
+                <input onclick="completedToggle(16)" type="checkbox" />
+              </div>
+              <div id="task_16_details" class="task_details fl"> 
+              <a id="task_16_info" class="task_slide" href="task_detail_fragment4.html" onclick="highlight_task('16');" tooltip="This task has no description">And what if I can do this too</a>
+              </div>
+              <div id="task_16_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_16_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_16_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(16)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div id="milestone_26_header" class="milestone_marker">Calvin LOVES Sharepoint</div>
+            <!-- task -->
+            <div id="17" class="task_row clearfix">
+              <div id="task_status_17" class="task_control fl center">
+                <input onclick="completedToggle(17)" type="checkbox" />
+              </div>
+              <div id="task_17_details" class="task_details fl"> 
+              <a id="task_17_info" class="task_slide" href="task_detail_fragment5.html" tooltip="This task has no description">Sometimes the simplest tasks are the longest titled ones - holy moly holy moly</a>
+              </div>
+              <div id="task_17_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_17_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_17_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(17)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="18" class="task_row clearfix">
+              <div id="task_status_18" class="task_control fl center">
+                <input onclick="completedToggle(18)" type="checkbox" />
+              </div>
+              <div id="task_18_details" class="task_details fl"> 
+              <a id="task_18_info" class="task_slide" href="task_detail_fragment6.html" tooltip="This task has no description">Guy Kawasaki's blog is interesting reading - so read it</a>
+              </div>
+              <div id="task_14_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_14_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_14_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(14)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+             <!-- task -->
+            <div id="19" class="task_row clearfix">
+              <div id="task_status_19" class="task_control fl center">
+                <input onclick="completedToggle(19)" type="checkbox" />
+              </div>
+              <div id="task_19_details" class="task_details fl"> 
+              <a id="task_19_info" class="task_slide" href="task_detail_fragment7.html" tooltip="This task has no description">How long has this been doing this crazy stuff</a>
+              </div>
+              <div id="task_19_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_19_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_19_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(14)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/19/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+             <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">OK - here we go again</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            
+            <div id="milestone_26_header" class="milestone_marker">Ask Calvin for his Sharepoint Expertise</div>
+            <!-- task -->
+            <div id="21" class="task_row clearfix">
+              <div id="task_status_21" class="task_control fl center">
+                <input onclick="completedToggle(21)" type="checkbox" />
+              </div>
+              <div id="task_21_details" class="task_details fl"> 
+              <a id="task_21_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Keep entering tasks Calvin, and you will yield great rewards</a>
+              </div>
+              <div id="task_21_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_21_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_21_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Sometimes a task is just a task, you must remember this</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Jolly jolly jolly in the season to be </a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">I love the Acura, but I also like the BMW</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Maybe I'll get a mini cooper and race Ady on Route 95</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">There might be a little mold in Calvin's stoage room</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <div id="milestone_26_header" class="milestone_marker">Calvin plus Sharepoint sitting in a Tree</div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Just a month before that the washing machine broke</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            
+            <!-- task -->
+            <div id="20" class="task_row clearfix">
+              <div id="task_status_20" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_20_details" class="task_details fl"> 
+              <a id="task_20_info" class="task_slide" href="task_detail_fragment8.html" tooltip="This task has no description">Clear out the storage room and its mold</a>
+              </div>
+              <div id="task_20_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_20_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_20_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(20)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/20/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer_extras_container">
+	<div id="footer_extras_tabs" class="clearfix">
+    	<ul>
+        	<li><a href="#" onclick="$('#extras_content').animate({'height':'50px'},100);">Files (14)</a></li>
+            <li><a href="#">Team (3 online)</a></li>
+        </ul>
+    </div>
+    <div id="extras_content">
+    	
+    </div>
+</div>
+</body>
+</html>

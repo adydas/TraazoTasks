@@ -1,0 +1,439 @@
+@charset "UTF-8";
+/* CSS Document */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+body {
+	background: #ECECEC;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+form {
+	margin: 0;
+	padding: 0;
+}
+
+textarea {
+	margin: 0;
+	padding: 0;
+}
+
+
+.container {
+	margin: 0 30px;
+	min-width: 950px;
+}
+
+a, a:visited {
+	color: #0066FF;
+	text-decoration: none;
+}
+
+.fl { float: left; }
+.fr { float: right; }
+
+input, textarea { border: 1px solid #CCC; -moz-border-radius: 5px; padding: 3px; }
+
+/* Clearing floats without extra markup
+   Based on How To Clear Floats Without Structural Markup by PiE
+   [http://www.positioniseverything.net/easyclearing.html] */
+
+.clearfix:after, .container:after {
+    content: "\0020"; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden; 
+    overflow:hidden; 
+}
+.clearfix, .container {display: block;}
+
+/* Regular clearing
+   apply to column that should drop below previous ones. */
+
+.clear { clear:both; }
+
+/* template */
+#mh {
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #CCCCCC;
+	margin:0 0 20px;
+	padding:0.5em 1em;
+	position:fixed;
+	top:0;
+	width:100%;
+}
+
+#mh #logo {
+	color: #555;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 3px 0 0 0;
+}
+#task_wrapper {
+	background: #FFF;
+	-moz-border-radius: 7px;
+	-moz-border-radius-topleft: 0;
+}
+	
+#task_container {
+}
+
+#list_wrapper {
+	width: 58%;
+}
+
+#info_wrapper {
+	width: 335px;
+}
+
+.content {
+	padding: 1.5em;
+}
+
+#section-header {
+	margin-top: 70px;
+}
+
+.nav_secondary  {
+	display: block;
+	margin: 0 35px;
+	padding: 0;
+	min-width: 950px;
+}
+
+.nav_secondary li{
+	background: #FFF url(../images/icon_project_tab.gif) no-repeat 7px 5px;
+	background: #FFF;
+	display: inline;
+	float: left;
+	list-style-type: none;
+	margin: 0 5px 0 0;
+	-moz-border-radius: 3px 3px 0 0;
+	padding: 5px 5px 5px 17px;
+	padding: 5px
+}
+
+.nav_secondary li a,
+.nav_secondary li a:visited {
+	color: #323;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 5px 10px;
+	text-decoration: none;
+}
+
+.nav_secondary li#project_tab_add {
+	background: none;
+	background: transparent url(../images/icon_open_project.gif) no-repeat 7px 5px;
+	background: none;
+	padding: 5px;
+}
+
+.nav_secondary li#project_tab_add a, 
+.nav_secondary li#project_tab_add a:visited {
+	color: #0066FF;
+}
+
+#g_create_wrap,
+.sub_group_form {
+	background: #E6E6EC;
+	-moz-border-radius: 7px;
+	padding: 2px 10px;
+}
+
+.sub_group {
+	background: #E6E6EC;
+	-moz-border-radius: 5px;
+	padding: 2px 7px 2px 7px;
+}
+
+.sub_group_form {
+	margin: 0 0 5px 0;
+}
+
+.sub_group_form label {
+	margin: 2px 0 0 0;
+}
+
+.sub_group_form input[type="text"]{
+	margin: 0 0 0 5px;
+	width: 360px;
+}
+
+#g_create_wrap label {
+	float: left;
+	padding: 4px 5px 0 0;
+}
+
+
+.g_header {
+	background: #5EA4CD;
+	color: #FFF;
+	font-size: 14px;
+	padding: 3px 8px;
+	margin: 5px 0 10px 0;
+	-moz-border-radius: 3px;
+}
+
+.g_name {
+	width: 460px;
+}
+
+.g_name_actions {
+	text-align: right;
+}
+
+.g_name_actions ul {
+	margin: 0;
+	padding: 0;
+}
+
+.g_name_actions ul li {
+	display: inline;
+	float: left;
+	list-style-type: none;
+}
+
+.g_name_actions ul li.last {
+	border-left: 1px solid #E6E6EC;
+	margin: 0 0 0 5px;
+}
+
+.g_name_actions ul li a {
+	color: #FFF;
+	font-size: 12px;
+}
+
+.g_name_actions ul li a.action_delete_group {
+	background: transparent url(../images/icon_group_delete.gif) no-repeat center;
+	height: 14px;
+	line-height: 14px;
+	padding: 6px 6px 6px 15px;
+	width: 11px;
+}
+
+.t_actions {
+	background: #FFF;
+	display: none;
+	-moz-border-radius: 6px 0 0 6px;
+	margin-left: -75px;
+	padding: 8px 0 8px 9px;
+	width: 65px;
+}
+
+
+.t_row {
+	padding: 4px 0;
+}
+
+.t_row_divider {
+	background: url(../images/bg_divider_line.gif) repeat-x center;
+	cursor: pointer;
+	height: 19px;
+	padding: 4px 0 2px 0;
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.t_row_divider.hover {
+	background: url(../images/bg_btn_add_task.gif) no-repeat center;
+}
+
+.t_row_divider.form {
+	background: none;
+	height: auto;
+	text-align: left;
+}
+
+.t_divider_actions {
+	display: none;
+	line-height: 13px;
+	margin: 0;
+	padding: 0;
+}
+
+.t_add,
+.t_add:visited {
+	background: #ECECE6;
+	color: #000;
+	font-size: 10px;
+	-moz-border-radius: 6px;
+	padding: 2px 7px;
+	margin: 0 15px;
+	text-transform: uppercase;
+}
+
+.t_status {
+	margin: 0 10px 0 0;
+}
+
+.t_id {
+	padding: 0 5px;
+	margin: 0 10px 7px 0;
+	text-align: center;
+	width: 20px;
+}
+
+.t_attach_trigger {
+	text-align: center;
+	width: 35px;
+}
+
+
+.t_attach_trigger .icon_attachment {
+	background: url(../images/icon_attachment.gif) no-repeat center;
+	height: 16px;
+	line-height: 16px;
+	margin: 0 20px 0 0;
+	padding: 8px;
+	width: 16px;
+}
+
+.t_comment_trigger {
+	background: transparent url(../images/bg_comment_new.png) no-repeat center;
+	font-size: 9px;
+	font-weight: bold;
+	margin: 0;
+	padding: 2px 11px 6px 11px;
+}
+
+.t_info_wrap {
+	width: 86%;
+}
+
+.t_description {
+	line-height: 20px;
+	padding: 0 10px 0 0;
+	width: 60%;
+}
+
+.t_description ul {
+	display: block;
+	margin: 3px 0 0 0;
+}
+
+.t_description ul li {
+	display: inline;
+	float: left;
+	margin: 0 15px 0 0;
+}
+
+.t_owner_due {
+	background: #E6E6EC;
+	font-size: 12px;
+	padding: 0 10px;
+	text-align: center;
+	width: 100px;
+}
+
+
+
+.add_new_form {
+	background: #E6E6EC;
+	margin: 10px 0;
+	-moz-border-radius: 5px;
+	padding: 10px;
+
+}
+
+.add_new_form textarea {
+	width: 98%;
+}
+
+.add_new_form ul {
+	display: block;
+	margin: 7px 0;
+	padding: 0;
+}
+
+.add_new_form ul li {
+	display: inline;
+	float: left;
+	list-style-type: none;
+	margin: 0 10px 10px 0;
+}
+
+.form_actions {
+	border-top: 2px solid #CCC;
+	margin: 10px 0 0 0;
+	-moz-border-radius: 5px;
+	padding: 10px 0 0 0;
+	text-align: right;
+}
+
+.task_comment {
+	background: #EFF5FF;
+	padding: 5px 0 5px 10px;
+	margin: 0 0 5px 0;
+	-moz-border-radius: 3px;
+}
+.task_comment.last {
+	border-width: 1px 0 0 0;
+}
+
+.task_comment .task_avatar {
+	width: 40px;
+}
+
+.task_comment .task_comment_content {
+	font-size: .85em;
+	width: 275px;
+}
+
+.comment_timestamp {
+	color: #222;
+	font-size: 11px;
+	margin: 7px 0 0 0;
+}
+
+.task_comment .task_comment_new textarea {
+	color: #888;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .85em;
+	height: 20px;
+	width: 100%;
+}
+
+
+.i_description {
+	width: 299px;
+}
+
+.i_started {
+	border-bottom: 1px solid #CCC;
+	color: #333;
+	font-size: 11px;
+	margin: 3px 0 5px 0;
+	padding: 0 0 5px 0;
+}
+
+#task_controls ul {
+	margin: 10px 0;
+	border-bottom: 1px solid #CCC;
+	padding: 0 0 10px 0;
+}	
+
+#task_controls ul li {
+	background: #E6E6EC;
+	
+	display: inline;
+	float: left;
+	list-style-type:none;
+	-moz-border-radius: 6px;
+	margin: 0 15px 0 0;
+	padding: 2px 17px;
+}
+
+#task_controls ul li#sort_owner {
+	background: none;
+	float: right;
+	padding: 2px 0;
+}

@@ -1,0 +1,52 @@
+all:
+  estimate-type:
+    seconds:  1
+    minutes:  2
+    hours:  3
+    days:  4
+    weeks: 5
+    months: 6
+    years: 7
+  notif-type:
+    comment:  1
+    message:  2
+  notif-status:
+    unread:  0
+    read:  1
+    delete: 2
+  sf_guard_plugin:
+    success_signin_url:      hub_route
+    success_signout_url:     hub_route
+    #signin_form:    sfGuardFormSigninCustom
+  account-role:
+    owner:  1
+    user:  2
+  plan-type:
+    FREE:	The free plan
+    PERSONAL: Personal plan
+    BASIC:  Basic plan
+    INTERMED: Intermediate plan
+    ADVANCED: Advanced plan
+    PRO:  Professional plan
+  account-files:
+ #   location: /Users/adydasotoole/projects/php/protoglue_sym12/uploads
+    location: /var/www/dev_nutshellapp/uploads
+  .array:
+    issue-status:
+      0:	In Progress
+      1:	Believed Fixed
+      2:	Cannot Reproduce
+      3:	Duplicate
+      4:	Deferred
+      5:	Fixed
+      6:	In Progress
+      7:	Need More Information
+      8:	Not a Bug
+      9:	Waive Requested
+      10:	Waived
+      11:	Closed
+
+
+
+
+    

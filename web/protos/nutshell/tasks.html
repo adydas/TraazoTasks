@@ -1,0 +1,562 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="title" content="A Kodazi Product" />
+<meta name="Description" content="A Kodazi Product" />
+<meta name="Keywords" content="A Kodazi Product" />
+<meta name="language" content="en" />
+<meta name="robots" content="index, follow" />
+<title>Tasks Sample</title>
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" type="text/css" media="screen" href="css/template.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/nyroModal.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.pageSlide.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/jquery.scrollPane.js"></script>
+
+<style type="text/css" media="screen">
+.box {
+    height: 420px;
+    position: relative;
+}
+
+#task_list_wrapper,
+#task_detail_wrapper {
+  overflow: auto;
+  position: relative;
+}
+
+.milestone_marker {
+  opacity: 1;
+}
+
+
+/* JS required styles */
+.box .box {
+    border: 0;
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    // 1. grab a bunch of variables
+    var $container = $('#task_list_wrapper');
+    var $headers = $('.milestone_marker');
+    var zIndex = 2;
+    var containerTop = $container.offset().top + parseInt($container.css('marginTop')) + parseInt($container.css('borderTopWidth'));
+    var $fakeHeader = $headers.filter(':first').clone();
+    
+    // 2. absolute position on the milestone markers, and fix the z-index so they increase
+    $headers.each(function () {
+       // set position absolute, etc
+       var $header = $(this), height = $header.outerHeight(), width = $header.outerWidth();
+
+       zIndex += 2;
+       
+       $header.css({
+           position: 'absolute',
+           width: $header.width(),
+           zIndex: zIndex
+       });
+       
+       // create the white space
+       var $spacer = $header.after('<div />').next();
+       $spacer.css({
+           height: height,
+           width: width
+       });
+    });
+    
+    // 3. bind a scroll event and change the text of the take heading
+    $container.scroll(function () {
+        $headers.each(function () {
+            var $header = $(this);
+            var top = $header.offset().top;
+            
+            if (top < containerTop) {
+                $fakeHeader.text($header.text());
+                $fakeHeader.css('zIndex', parseInt($header.css('zIndex'))+100);
+            }
+        });
+    });
+    
+    // 4. initialisation
+    $container.wrap('<div class="box" />');
+    $fakeHeader.css({ zIndex: 8, position: 'absolute',  background: '#FFF url(images/bg_marker.png) no-repeat scroll left center',width: $headers.filter(':first').width()});
+    $container.before($fakeHeader.text($headers.filter(':first').text()));
+	
+	
+	$(window).resize(function(){
+		wH = $(window).height();
+		wH = (wH - 253);
+	   $('.box').height(wH);
+
+
+	});
+
+
+
+
+});
+</script>
+</head>
+<body>
+<div id="mh_bg"> </div>
+<div id="mh">
+  <div id="mh_left">
+    <div class="clearfix">
+      <div id="account_name" class="fl"> <a href="/account/hub/22">ducati</a> </div>
+      <div id="project_jump" class="fl">
+        <div id="project_jump_trigger" onclick="$('#project_jump_list_wrap').toggle();$(this).toggleClass('hover');">Jump to a different project...</div>
+        <div id="project_jump_list_wrap" style="display: none;">
+          <div id="project_jump_list_close"> <a href="#" onclick="$('#project_jump_list_wrap').hide();$('#project_jump_trigger').toggleClass('hover'); return false;"> Close</a> </div>
+          <div id="project_jump_list"> <a href="/project/10/allTasksView">
+            <div class="project_jump_name">1098 <span class="project_jump_task_count">21 Upcoming Tasks</span></div>
+            </a> <a href="/project/49/allTasksView">
+            <div class="project_jump_name">848 <span class="project_jump_task_count">0 Upcoming Tasks</span></div>
+            </a> <a href="/project/50/allTasksView">
+            <div class="project_jump_name">1198 <span class="project_jump_task_count">0 Upcoming Tasks</span></div>
+            </a> <a href="/project/57/allTasksView">
+            <div class="project_jump_name">Streetfighter <span class="project_jump_task_count">2 Upcoming Tasks</span></div>
+            </a> <a href="/project/59/allTasksView">
+            <div class="project_jump_name">Kodazi <span class="project_jump_task_count">3 Upcoming Tasks</span></div>
+            </a> <a href="/project/62/allTasksView">
+            <div class="project_jump_name">Nutshell Bugs <span class="project_jump_task_count">1 Upcoming Tasks</span></div>
+            </a> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mh_right"> Hi, <a href="/profile/edit">Tea Bags</a> | <a class="login_logout" href="/logout">Logout</a> </div>
+</div>
+
+
+<div class="clearfix">
+<div class="fl">
+<div class="container clearfix">
+  <div class="fl">
+    <h2>Tasks</h2>
+  </div>
+  <div class="fl content_tab_set">
+    <div id="content_tab_wrapper_0" class="content_tab_wrapper clearfix">
+      <ul>
+        <li id="content_tab_all"> <a href="/">All</a> </li>
+        <li id="content_tab_milestone" class="selected"> <a href="/project/10/allTasksView">By Milestone</a> </li>
+        <li id="content_tab_date"> <a href="#" onclick="jQuery.ajax({type:'get',dataType:'html',success:function(data, textStatus){jQuery('#task_view_wrapper').html(data);},complete:function(XMLHttpRequest, textStatus){content_tab_select(&quot;content_tab_date&quot;);},url:'/project/10/allTasks'}); return false;">By Date</a> </li>
+        <li id="content_tab_status"> <a href="/">By Status</a> </li>
+        <li id="content_tab_mine"> <a href="#" onclick="jQuery.ajax({type:'get',dataType:'html',success:function(data, textStatus){jQuery('#task_view_wrapper').html(data);},complete:function(XMLHttpRequest, textStatus){content_tab_select(&quot;content_tab_mine&quot;);},url:'/user/pTasks/10'}); return false;">Just My Tasks</a> </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div id="content_wrapper" class="container">
+  <div class="dynamic_container block_content">
+  	<div id="task_list_wrapper" class="box">
+    <div id="displayTaskListMile">
+      <div id="milestone_26_header" class="milestone_marker">Get trailer from David</div>
+      <div id="milestone_26_tasks">
+        <div class="add_new no_tasks" onclick="add_task(26); return false;">No tasks assigned to this milestone. <a href="#">Add New Task</a></div>
+        <div id="milestone_37_header" class="milestone_marker">blah</div>
+        <div id="milestone_37_tasks">
+          <div class="add_new no_tasks" onclick="add_task(37); return false;">No tasks assigned to this milestone. <a href="#">Add New Task</a></div>
+          <div id="milestone_25_header" class="milestone_marker">Prep bike for track day</div>
+          <div id="milestone_25_tasks">
+            <div id="11" class="task_row clearfix keynav_focusbox">
+              <div id="task_status_11" class="task_control fl center">
+                <input onclick="completedToggle(11)" type="checkbox" />
+              </div>
+              <div id="task_11_details" class="task_details fl"> <a id="task_11_info" class="max" href="/task/11/view" tooltip="Set psi to 32/34">Set tire pressure </a>
+                <div id="task_11_info_content" class="task_info">
+                  <div class="task_options clearfix">
+                    <ul>
+                      <li><a class="info" href="/task/11/view">Info</a></li>
+                      <li><a class="comments" href="/task/11/view">Comments (2)</a></li>
+                      <li><a class="comments" href="/task/11/view">Attachments (0)</a></li>
+                    </ul>
+                  </div>
+                  <div class="task_description">Set psi to 32/34</div>
+                </div>
+              </div>
+              <div id="task_11_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_11_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_11_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(11)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/11/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div id="13" class="task_row clearfix">
+              <div id="task_status_13" class="task_control fl center">
+                <input onclick="completedToggle(13)" type="checkbox" />
+              </div>
+              <div id="task_13_details" class="task_details fl"> <a id="task_13_info" class="max" href="/task/13/view" tooltip="This task has no description">Bring back protector</a>
+                <div id="task_13_info_content" class="task_info">
+                  <div class="task_options clearfix">
+                    <ul>
+                      <li><a class="info" href="/task/13/view">Info</a></li>
+                      <li><a class="comments" href="/task/13/view">Comments (2)</a></li>
+                      <li><a class="comments" href="/task/13/view">Attachments (0)</a></li>
+                    </ul>
+                  </div>
+                  <div class="task_description">This task has no description</div>
+                </div>
+              </div>
+              <div id="task_13_due_date" class="task_due_date fl center">5 months</div>
+              <div id="task_13_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_13_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(13)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/13/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div id="386" class="task_row clearfix">
+              <div id="task_status_386" class="task_control fl center">
+                <input onclick="completedToggle(386)" type="checkbox" />
+              </div>
+              <div id="task_386_details" class="task_details fl"> <a id="task_386_info" class="max" href="/task/386/view" tooltip="This task has no description">prep bike for track day</a>
+                <div id="task_386_info_content" class="task_info">
+                  <div class="task_options clearfix">
+                    <ul>
+                      <li><a class="info" href="/task/386/view">Info</a></li>
+                      <li><a class="comments" href="/task/386/view">Comments (2)</a></li>
+                      <li><a class="comments" href="/task/386/view">Attachments (0)</a></li>
+                    </ul>
+                  </div>
+                  <div class="task_description">This task has no description</div>
+                </div>
+              </div>
+              <div id="task_386_due_date" class="task_due_date fl center">about 1 month</div>
+              <div id="task_386_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_386_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(386)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/386/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div id="14" class="task_row clearfix">
+              <div id="task_status_14" class="task_control fl center">
+                <input onclick="completedToggle(14)" type="checkbox" />
+              </div>
+              <div id="task_14_details" class="task_details fl"><a id="task_14_info" class="max" href="/task/14/view" tooltip="This task has no description">Bring salt tablets to the show</a>
+                <div id="task_14_info_content" class="task_info">
+                  <div class="task_options clearfix">
+                    <ul>
+                      <li><a class="info" href="/task/14/view">Info</a></li>
+                      <li><a class="comments" href="/task/14/view">Comments (2)</a></li>
+                      <li><a class="comments" href="/task/14/view">Attachments (0)</a></li>
+                    </ul>
+                  </div>
+                  <div class="task_description">This task has no description</div>
+                </div>
+              </div>
+              <div id="task_14_due_date" class="task_due_date fl center">about 13 days</div>
+              <div id="task_14_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_14_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(14)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/14/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div id="23" class="task_row clearfix">
+              <div id="task_status_23" class="task_control fl center">
+                <input onclick="completedToggle(23)" type="checkbox" />
+              </div>
+              <div id="task_23_details" class="task_details fl"><a id="task_23_info" class="max" href="/task/23/view" tooltip="This task has no description">Bring gloves to work</a>
+                <div id="task_23_info_content" class="task_info">
+                  <div class="task_options clearfix">
+                    <ul>
+                      <li><a class="info" href="/task/23/view">Info</a></li>
+                      <li><a class="comments" href="/task/23/view">Comments (2)</a></li>
+                      <li><a class="comments" href="/task/23/view">Attachments (0)</a></li>
+                    </ul>
+                  </div>
+                  <div class="task_description">This task has no description</div>
+                </div>
+              </div>
+              <div id="task_23_due_date" class="task_due_date fl center">about 12 days</div>
+              <div id="task_23_owner" class="task_owner fl center">Tea Bags</div>
+              <div id="task_23_actions" class="task_actions fr right clearfix">
+                <div class="fr"><a onclick="deleteTask(23)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                <div class="task_action_edit fr"><a href="/task/23/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+              </div>
+            </div>
+            <div class="add_new"><a href="#">Add New Task to This Milestone</a></div>
+            <div id="milestone_31_header" class="milestone_marker">Suspension</div>
+            <div id="milestone_31_tasks">
+              <div id="36" class="task_row clearfix">
+                <div id="task_status_36" class="task_control fl center">
+                  <input onclick="completedToggle(36)" type="checkbox" />
+                </div>
+                <div id="task_36_details" class="task_details fl"><a id="task_36_info" class="max" href="/task/36/view" tooltip="default content">Oil</a>
+                  <div id="task_36_info_content" class="task_info">
+                    <div class="task_options clearfix">
+                      <ul>
+                        <li><a class="info" href="/task/36/view">Info</a></li>
+                        <li><a class="comments" href="/task/36/view">Comments (2)</a></li>
+                        <li><a class="comments" href="/task/36/view">Attachments (0)</a></li>
+                      </ul>
+                    </div>
+                    <div class="task_description">default content</div>
+                  </div>
+                </div>
+                <div id="task_36_due_date" class="task_due_date fl center">5 months</div>
+                <div id="task_36_owner" class="task_owner fl center">Tea Bags</div>
+                <div id="task_36_actions" class="task_actions fr right clearfix">
+                  <div class="fr"><a onclick="deleteTask(36)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+                  <div class="task_action_edit fr"><a href="/task/36/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+                </div>
+              </div>
+              <div class="add_new"><a href="#">Add New Task to This Milestone</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="displayTaskListSans">
+      <div id="sansMile" class="milestone_marker">No Milestone Assigned</div>
+      <div id="47" class="task_row clearfix">
+        <div id="task_status_47" class="task_control fl center">
+          <input onclick="completedToggle(47)" type="checkbox" />
+        </div>
+        <div id="task_47_details" class="task_details fl"><a id="task_47_info" class="max" href="/task/47/view" tooltip="default content"></a>
+          <div id="task_47_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/47/view">Info</a></li>
+                <li><a class="comments" href="/task/47/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/47/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/47/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_47_due_date" class="task_due_date fl center">4 months</div>
+        <div id="task_47_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_47_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(47)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/47/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="79" class="task_row clearfix">
+        <div id="task_status_79" class="task_control fl center">
+          <input onclick="completedToggle(79)" type="checkbox" />
+        </div>
+        <div id="task_79_details" class="task_details fl"><a id="task_79_info" class="max" href="/task/79/view" tooltip="default content">Hello Task</a>
+          <div id="task_79_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/79/view">Info</a></li>
+                <li><a class="comments" href="/task/79/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/79/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/79/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_79_due_date" class="task_due_date fl center">4 months</div>
+        <div id="task_79_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_79_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(79)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/79/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="80" class="task_row clearfix">
+        <div id="task_status_80" class="task_control fl center">
+          <input onclick="completedToggle(80)" type="checkbox" />
+        </div>
+        <div id="task_80_details" class="task_details fl"><a id="task_80_info" class="max" href="/task/80/view" tooltip="default content">Blue Balls</a>
+          <div id="task_80_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/80/view">Info</a></li>
+                <li><a class="comments" href="/task/80/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/80/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/80/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_80_due_date" class="task_due_date fl center">3 months</div>
+        <div id="task_80_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_80_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(80)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/80/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="81" class="task_row clearfix">
+        <div id="task_status_81" class="task_control fl center">
+          <input onclick="completedToggle(81)" type="checkbox" />
+        </div>
+        <div id="task_81_details" class="task_details fl"><a id="task_81_info" class="max" href="/task/81/view" tooltip="default content">Hello boo</a>
+          <div id="task_81_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/81/view">Info</a></li>
+                <li><a class="comments" href="/task/81/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/81/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/81/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_81_due_date" class="task_due_date fl center">3 months</div>
+        <div id="task_81_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_81_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(81)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/81/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="82" class="task_row clearfix">
+        <div id="task_status_82" class="task_control fl center">
+          <input onclick="completedToggle(82)" type="checkbox" />
+        </div>
+        <div id="task_82_details" class="task_details fl"><a id="task_82_info" class="max" href="/task/82/view" tooltip="default content">Test</a>
+          <div id="task_82_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/82/view">Info</a></li>
+                <li><a class="comments" href="/task/82/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/82/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/82/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_82_due_date" class="task_due_date fl center">3 months</div>
+        <div id="task_82_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_82_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(82)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/82/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="83" class="task_row clearfix">
+        <div id="task_status_83" class="task_control fl center">
+          <input onclick="completedToggle(83)" type="checkbox" />
+        </div>
+        <div id="task_83_details" class="task_details fl"><a id="task_83_info" class="max" href="/task/83/view" tooltip="default content">Test 22</a>
+          <div id="task_83_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/83/view">Info</a></li>
+                <li><a class="comments" href="/task/83/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/83/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/83/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_83_due_date" class="task_due_date fl center">3 months</div>
+        <div id="task_83_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_83_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(83)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/83/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="84" class="task_row clearfix">
+        <div id="task_status_84" class="task_control fl center">
+          <input onclick="completedToggle(84)" type="checkbox" />
+        </div>
+        <div id="task_84_details" class="task_details fl"><a id="task_84_info" class="max" href="/task/84/view" tooltip="default content">asdadsd</a>
+          <div id="task_84_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/84/view">Info</a></li>
+                <li><a class="comments" href="/task/84/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/84/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/84/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">default content</div>
+          </div>
+        </div>
+        <div id="task_84_due_date" class="task_due_date fl center">3 months</div>
+        <div id="task_84_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_84_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(84)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/84/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div id="385" class="task_row clearfix">
+        <div id="task_status_385" class="task_control fl center">
+          <input onclick="completedToggle(385)" type="checkbox" />
+        </div>
+        <div id="task_385_details" class="task_details fl"><a id="task_385_info" class="max" href="/task/385/view" tooltip="This task has no description">the feature is not the killer feiurua</a>
+          <div id="task_385_info_content" class="task_info">
+            <div class="task_options clearfix">
+              <ul>
+                <li><a class="info" href="/task/385/view">Info</a></li>
+                <li><a class="comments" href="/task/385/view">Comments (2)</a></li>
+                <li><a class="comments" href="/task/385/view">Issues (0)</a></li>
+                <li><a class="comments" href="/task/385/view">Attachments (0)</a></li>
+              </ul>
+            </div>
+            <div class="task_description">This task has no description</div>
+          </div>
+        </div>
+        <div id="task_385_due_date" class="task_due_date fl center">about 1 month</div>
+        <div id="task_385_owner" class="task_owner fl center">Tea Bags</div>
+        <div id="task_385_actions" class="task_actions fr right clearfix">
+          <div class="fr"><a onclick="deleteTask(385)"><img src="images/icon_trash.png" alt="Delete Task" /></a></div>
+          <div class="task_action_edit fr"><a href="/task/385/edit" class="nyroModal" onclick="return false;">Edit</a></div>
+        </div>
+      </div>
+      <div class="add_new"><a href="#">Add New Task</a></div>
+      <br/><br/>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+<div class="box fl" style="width: 25%; position: fixed; padding: 1.5em; background: #FFF; right: 0; top: 155px; -moz-border-radius: 10px 0 0 10px;">
+	<div id="task_detail_wrapper" class="box">
+	<h2>Set Tire Pressure of the front left tire on the Audi A4 <img src="images/icon_comment.gif" /> 2</h2>
+    <div class="task_detail_own_date"><span class="owner">Calvin Koo</span> by <span class="due">tomorrow</span></div>
+    <div class="box">
+    <p>
+    	Sometimes, after driving long distances, the right front tire will lose 10 pounds of air pressure below the level the tire should be at.
+        This needs to be corrected. 
+    </p>
+    <br/>
+    <div id="task_84_comment1" class="task_comment clearfix">
+    	<div class="task_avatar fl">
+        	<img src="images/avatar_comment1.gif" />
+        </div>
+        <div class="task_comment_content fl">
+        	I thought these cars never needed tending to Calvin...?!
+        </div>
+    </div>
+    <div id="task_84_comment1" class="task_comment last clearfix">
+    	<div class="task_avatar fl">
+        	<img src="images/avatar_comment2.gif" />
+        </div>
+        <div class="task_comment_content fl">
+        	<textarea style="width: 280px; height: 20px;font-size: .85em; color: #888;">Add Comment</textarea>
+            <a href="#" style="font-size: .8em;">+ Attach a file</a>
+        </div>
+    </div>
+    <div class="related_files">
+    <h5>Related Files</h5>
+    <ul class="files">
+    	<li><a href="#">Tire pressure guides</a></li>
+        <li><a href="#">Car Preferred Pressures</a></li>
+        <li><a href="#">Flat Tire Pic</a></li>
+    </ul>
+    
+    </div>
+    <div id="related_files_add">
+    	<a href="#">+ Upload a new file</a>
+    </div>
+    </div>
+</div>
+</div>
+
+</div>
+
+
+
+</body>
+</html>

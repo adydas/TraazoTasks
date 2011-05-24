@@ -1,0 +1,11 @@
+all:
+  http_metas:
+    content-type: text/html
+
+  stylesheets:    [login_reg.css, /sf/calendar/skins/aqua/theme.css]
+
+  javascripts:    [ /sf/calendar/calendar.js, /sf/calendar/lang/calendar-en.js, /sf/calendar/calendar-setup.js ,/js/tiny_mce/tiny_mce.js]
+
+  has_layout:     on
+  layout:         layout_projects
+  
